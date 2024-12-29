@@ -1,38 +1,46 @@
-from symtable import Class
-
-from fastapi import FastAPI, HTTPException
-import asyncpg
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
-from fastapi import Depends
-from sqlalchemy.orm import Session
+import asyncpg
+from typing import Optional
 
 app = FastAPI()
 
-DATABASE_URL = "postgresql://postgres:nourysushi@localhost:5432/Car rental"
+DATABASE_URL = "postgresql://postgres:nourysushi@localhost:5432/Car-rental"
 
-async def get_db() :
+# Dependency to get a database connection
+async def get_db():
     conn = await asyncpg.connect(DATABASE_URL)
     try:
         yield conn
     finally:
         await conn.close()
 
+# Pydantic model for user
 class User(BaseModel):
-    id: int
+    id: Optional[int]
     email: str
     password: str
-    admin : bool
+    admin: bool
+
+# Create a new user
 @app.post("/users/")
-async def create_user(id : int, email: str, password: str, admin: bool,db: Session = Depends(get_db)):
-    try :
-        await db.execute("""INSERT INTO "User" (user_id, email, password, is_admin) VALUES ($1, $2, $3, $4)""", id, email, password, admin)
-        return {"id": id, "email": email, "password": password, "admin": admin}
+async def create_user(email: str, password: str, admin: bool, db=Depends(get_db)):
+    try:
+        await db.execute(
+            """INSERT INTO "User" (email, password, is_admin) VALUES ($1, $2, $3)""",
+            email, password, admin,
+        )
+        return {"email": email, "password": password, "admin": admin}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-app.get("/users/{id}")
-async def get_user(id: int):
+
+# Get a user by ID
+@app.get("/users/{id}")
+async def get_user(id: int, db=Depends(get_db)):
     try:
-        user = await get_db().fetchrow("SELECT * FROM users WHERE id = $1", id)
-        return user
+        user = await db.fetchrow("""SELECT * FROM "User" WHERE user_id = $1""", id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return dict(user)  # Convert asyncpg record to dictionary
     except Exception as e:
-        raise HTTPException(status_code=410, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))

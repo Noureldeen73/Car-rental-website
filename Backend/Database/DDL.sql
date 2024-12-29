@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "User"(
-    user_id int PRIMARY KEY,
+    user_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     is_admin boolean NOT NULL
