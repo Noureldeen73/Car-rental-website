@@ -23,23 +23,24 @@ VALUES
 ('Coastal Office', 'Alexandria', '101 Beach Ave', '98765'),
 ('Industrial Office', '6th of October', '202 Industrial Blvd', '11111');
 
-INSERT INTO Car (plate_number, model, year, free, office_id)
-VALUES
-('ABC12345', 'Toyota Corolla', 2020, true, 1),
-('XYZ98765', 'Honda Civic', 2019, false, 2),
-('LMN45678', 'Ford Focus', 2018, true, 1),
-('PQR11223', 'Chevrolet Malibu', 2021, false, 3),
-('TUV55667', 'Nissan Altima', 2019, true, 2),
-('JKL88990', 'BMW 3 Series', 2022, false, 1),
-('RST00112', 'Audi A4', 2021, true, 3),
-('WXY34567', 'Volkswagen Passat', 2020, true, 2),
-('FGH23456', 'Mercedes-Benz C-Class', 2019, false, 1),
-('IJK67890', 'Subaru Impreza', 2018, true, 3);
 
-INSERT INTO Reservation (reservation_date, pick_up_date, return_date, car_id, customer_id)
+INSERT INTO Car (plate_number, model, brand, year, available, office_id, num_passengers)
 VALUES
-('2024-12-01 10:00:00', '2024-12-03 09:00:00', '2024-12-10 15:00:00', 1, 1),
-('2024-12-02 14:30:00', '2024-12-04 12:00:00', '2024-12-08 16:00:00', 2, 2),
-('2024-12-05 11:00:00', '2024-12-06 08:00:00', '2024-12-12 18:00:00', 3, 3),
-('2024-12-06 09:15:00', '2024-12-07 10:00:00', '2024-12-14 11:30:00', 4, 4),
-('2024-12-07 16:45:00', '2024-12-09 14:00:00', '2024-12-15 19:00:00', 5, 5);
+('ABC12345', 'Corolla', 'Toyota', 2020, true, 1, 5),
+('XYZ98765', 'Civic', 'Honda', 2019, false, 2, 7),
+('LMN45678', 'Focus', 'Ford', 2018, true, 1, 4),
+('PQR11223', 'Malibu', 'Chevrolet', 2021, false, 3, 2),
+('TUV55667', 'Altima', 'Nissan', 2019, true, 2, 6),
+('JKL88990', '3 Series', 'BMW', 2022, false, 1, 7),
+('RST00112', 'A4', 'Audi', 2021, true, 3, 4),
+('WXY34567', 'Passat', 'Volkswagen', 2020, true, 2, 2),
+('FGH23456', 'C-Class', 'Mercedes-Benz', 2019, false, 1, 9),
+('IJK67890', 'Impreza', 'Subaru', 2018, true, 3, 5);
+
+INSERT INTO Reservation (reservation_date, pick_up_date, return_date, plate_number, customer_id)
+VALUES
+('2024-12-01 10:00:00', '2024-12-03 09:00:00', '2024-12-10 15:00:00', 'ABC12345', 1),
+('2024-12-02 14:30:00', '2024-12-04 12:00:00', '2024-12-08 16:00:00', 'LMN45678', 2),
+('2024-12-05 11:00:00', '2024-12-06 08:00:00', '2024-12-12 18:00:00', 'RST00112', 3),
+('2024-12-06 09:15:00', '2024-12-07 10:00:00', '2024-12-14 11:30:00', 'FGH23456', 4),
+('2024-12-07 16:45:00', '2024-12-09 14:00:00', '2024-12-15 19:00:00', 'IJK67890', 5);
