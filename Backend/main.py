@@ -1,12 +1,8 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import Optional
-from login import router as loginRouter
-from user import router as userRouter
-from register import router as registerRouter
-import module
-from database import get_db
+from Backend.routers.login import router as loginRouter
+from Backend.routers.user import router as userRouter
+from Backend.routers.register import router as registerRouter
 
 app = FastAPI()
 
