@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Customer(
 );
 CREATE TABLE IF NOT EXISTS Office(
     office_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    office_name varchar(255) NOT NULL,
+    office_name varchar(255) NOT NULL UNIQUE,
     city varchar(255) NOT NULL,
     street varchar(255) NOT NULL,
     zip_code varchar(10) NOT NULL
@@ -36,9 +36,10 @@ CREATE TABLE IF NOT EXISTS Car(
     model        varchar(255) NOT NULL,
     brand        varchar(255) NOT NULL,
     year         int          NOT NULL,
-    available       boolean      NOT NULL,
+    available    boolean      NOT NULL,
     office_id    int          NOT NULL,
-    num_passengers int         NOT NULL,
+    price       float        NOT NULL,
+    num_passengers int        NOT NULL,
 
     FOREIGN KEY (office_id) REFERENCES Office (office_id)
 );
@@ -54,10 +55,10 @@ CREATE TABLE IF NOT EXISTS Reservation(
 );
 CREATE TABLE IF NOT EXISTS Payment(
     payment_id     int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    payment_type  varchar(255) NOT NULL,
-    payment_date  timestamp NOT NULL,
-    amount        float        NOT NULL,
-    reservation_id int         NOT NULL,
+    payment_type  varchar(255)   NOT NULL,
+    payment_date  timestamp      NOT NULL,
+    total_price   float          NOT NULL,
+    reservation_id int           NOT NULL,
     FOREIGN KEY (reservation_id) REFERENCES Reservation (reservation_id)
 );
 
