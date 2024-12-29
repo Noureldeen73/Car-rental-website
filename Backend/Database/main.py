@@ -22,6 +22,7 @@ class User(BaseModel):
     password: str
     admin: bool
 
+
 # Create a new user
 @app.post("/users/")
 async def create_user(email: str, password: str, admin: bool, db=Depends(get_db)):
