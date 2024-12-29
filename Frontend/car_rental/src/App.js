@@ -14,9 +14,8 @@ function App() {
         <Routes>
           <Route path="/" element={
             <div className="auth-container">
-              <CustomerPage />
-              {/* <Login />
-              <Register /> */}
+              <Login />
+              <Register />
             </div>
           } />
           <Route path="/customer" element={<CustomerPage />} />
