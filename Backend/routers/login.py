@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 from database import get_db
-import module
+
 
 router = APIRouter(
     prefix = '/login',
