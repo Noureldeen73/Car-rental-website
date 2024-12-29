@@ -10,12 +10,12 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8000/users/', {
+      const response = await fetch('http://127.0.0.1:8000/register/create_user/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}&admin=false`,
+        body: `email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}&admin=${false}`,
       });
       
       if (response.ok) {
