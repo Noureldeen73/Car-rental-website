@@ -13,4 +13,6 @@ router = APIRouter(
 @router.get('/authenticate/')
 async def authenticateLoginDetails(email: str, password: str, db=Depends(get_db)):
     # IMPLEMENT YA SHABAB 
+    # check if user exists with this email and password
+    # if exists, return {user_id: user_id, is_admin: is_admin}
     pass

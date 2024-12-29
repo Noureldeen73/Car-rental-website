@@ -2,32 +2,32 @@ import React, { useState } from 'react';
 import '../styles/LoginRegister.css';
 
 function Login() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:8000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `email=${encodeURIComponent(formData.email)}&password=${encodeURIComponent(formData.password)}`,
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
       });
-      
-      if (response.ok) {
-        alert('Login successful!');
-      } else {
-        const error = await response.json();
-        alert(`Login failed: ${error.detail}`);
-      }
-    } catch (error) {
-      alert('Login failed: ' + error.message);
-    }
-  };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const queryString = new URLSearchParams({
+            ...formData,
+          }).toString();
+    
+          const response = await fetch('http://127.0.0.1:8000/login/authenticate/?' + queryString, {
+            method: 'GET',
+          });
+          
+          if (response.ok) {
+            alert('Login successful!');
+          } else {
+            const error = await response.json();
+            alert(`Login failed: ${error.detail}`);
+          }
+        } catch (error) {
+          alert('Login failed: ' + error.message);
+        }
+      };
 
   const handleChange = (e) => {
     setFormData({
