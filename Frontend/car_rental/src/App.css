@@ -1,5 +1,22 @@
 .App {
   text-align: center;
+  background-image: url('../../../car.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.app-title {
+  color: white;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 20px;
+  min-height: 100vh;
 }
 
 .App-logo {

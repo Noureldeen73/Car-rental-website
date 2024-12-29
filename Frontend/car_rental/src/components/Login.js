@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/LoginRegister.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -7,19 +8,24 @@ function Login() {
         password: ''
       });
     
+      const navigate = useNavigate();
+    
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const queryString = new URLSearchParams({
-            ...formData,
-          }).toString();
+          const queryString = new URLSearchParams(formData).toString();
     
           const response = await fetch('http://127.0.0.1:8000/login/authenticate/?' + queryString, {
             method: 'GET',
           });
           
           if (response.ok) {
-            alert('Login successful!');
+            const data = await response.json();
+            if (data.is_admin) {
+              navigate('/admin');
+            } else {
+              navigate('/customer');
+            }
           } else {
             const error = await response.json();
             alert(`Login failed: ${error.detail}`);
