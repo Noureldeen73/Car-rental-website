@@ -1,6 +1,6 @@
 import asyncpg
 
-DATABASE_URL = "postgresql://postgres:nourysushi@localhost:5432/Car-reantal"
+DATABASE_URL = "postgresql://postgres:eiad amel@localhost:5432/Car-rental"
 
 # Dependency to get a database connection
 async def get_db():
