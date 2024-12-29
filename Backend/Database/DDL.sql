@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS "User"(
     is_admin boolean NOT NULL
 );
 CREATE TABLE IF NOT EXISTS Customer(
-    customer_id int PRIMARY KEY,
+    customer_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     phone_number varchar(17) NOT NULL,
@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS Customer(
     FOREIGN KEY (user_id) REFERENCES "User"(user_id)
 );
 CREATE TABLE IF NOT EXISTS Office(
-    office_id int PRIMARY KEY,
+    office_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     office_name varchar(255) NOT NULL,
     city varchar(255) NOT NULL,
     street varchar(255) NOT NULL,
     zip_code varchar(10) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS Admin(
-    admin_id int PRIMARY KEY,
+    admin_id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     user_id int NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Admin(
 );
 CREATE TABLE IF NOT EXISTS Car
 (
-    car_id       int PRIMARY KEY,
+    car_id       int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     plate_number varchar(10)  NOT NULL,
     model        varchar(255) NOT NULL,
     year         int          NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS Car
 );
 CREATE TABLE IF NOT EXISTS Reservation
 (
-    reservation_id   int PRIMARY KEY,
+    reservation_id   int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     reservation_date timestamp NOT NULL,
     pick_up_date     timestamp NOT NULL,
     return_date      timestamp NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS Reservation
 );
 CREATE TABLE IF NOT EXISTS Payment
 (
-    payment_id     int PRIMARY KEY,
+    payment_id     int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     payment_type  varchar(255) NOT NULL,
     payment_date  timestamp NOT NULL,
     amount        float        NOT NULL,

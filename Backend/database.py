@@ -1,7 +1,6 @@
 import asyncpg
-from fastapi import Depends
 
-DATABASE_URL = "postgresql://postgres:eiad amel@localhost:5432/Car-rental"
+DATABASE_URL = "postgresql://postgres:nourysushi@localhost:5432/Car-reantal"
 
 # Dependency to get a database connection
 async def get_db():

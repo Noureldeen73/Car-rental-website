@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, APIRouter, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
-from database import get_db
+from Backend.database import get_db
 
 
 router = APIRouter(
