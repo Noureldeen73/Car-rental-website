@@ -5,14 +5,19 @@ function Register() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    first_name: '',
+    last_name: '',
+    phone_number: '',
+    city: '',
+    street: '',
+    zip_code: ''
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const queryString = new URLSearchParams({
-        email: formData.email,
-        password: formData.password,
+        ...formData,
         admin: 'false'
       }).toString();
 
@@ -42,6 +47,7 @@ function Register() {
     <div className="register-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <h2>Register</h2>
+        
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
@@ -53,6 +59,7 @@ function Register() {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
@@ -64,6 +71,79 @@ function Register() {
             required
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="first_name">First Name:</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="last_name">Last Name:</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="phone_number">Phone Number:</label>
+          <input
+            type="tel"
+            id="phone_number"
+            name="phone_number"
+            value={formData.phone_number}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="city">City:</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="street">Street:</label>
+          <input
+            type="text"
+            id="street"
+            name="street"
+            value={formData.street}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="zip_code">ZIP Code:</label>
+          <input
+            type="text"
+            id="zip_code"
+            name="zip_code"
+            value={formData.zip_code}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <button type="submit" className="submit-button">Register</button>
       </form>
     </div>
