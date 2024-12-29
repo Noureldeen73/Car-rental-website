@@ -7,7 +7,7 @@ router = APIRouter(
     tags = ['Customer']
 )
 
-@router.get('/Customer/get_by_id/')
+@router.get('get_by_id/')
 async def get_all_reservations(customer_id: int, db=Depends(get_db)):
     customer_data = await db.fetchrow(
         """
@@ -22,11 +22,12 @@ async def get_all_reservations(customer_id: int, db=Depends(get_db)):
 
     reservations = await db.fetch(
         """
-        SELECT r.reservation_date, r.pick_up_date, r.return_date, c.model, c.year, c.plate_number, o.office_name, o.city
+        SELECT r.reservation_date, r.pick_up_date, r.return_date, c.model, c.year, c.plate_number,p.total_price ,o.office_name, o.city
         FROM Reservation r
         JOIN Car c ON r.plate_number = c.plate_number
         JOIN Office o ON c.office_id = o.office_id 
         JOIN Customer cu ON r.customer_id = cu.customer_id
+        JOIN Payment p ON r.reservation_id = p.reservation_id
         WHERE cu.customer_id = $1
         """,
         customer_id,
