@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-image: url('../../../car.png');
+  background-image: url('./car.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

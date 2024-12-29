@@ -3,6 +3,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import CustomerPage from './components/CustomerPage';
 import AdminPage from './components/AdminPage';
+import ReservePage from './components/ReservePage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -13,12 +14,14 @@ function App() {
         <Routes>
           <Route path="/" element={
             <div className="auth-container">
-              <Login />
-              <Register />
+              <CustomerPage />
+              {/* <Login />
+              <Register /> */}
             </div>
           } />
           <Route path="/customer" element={<CustomerPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/reserve/:carId" element={<ReservePage />} />
         </Routes>
       </div>
     </Router>

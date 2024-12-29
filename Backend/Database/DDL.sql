@@ -31,29 +31,28 @@ CREATE TABLE IF NOT EXISTS Admin(
     FOREIGN KEY (user_id) REFERENCES "User"(user_id),
     FOREIGN KEY (office_id) REFERENCES Office(office_id)
 );
-CREATE TABLE IF NOT EXISTS Car
-(
-    car_id       int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    plate_number varchar(10)  NOT NULL,
+CREATE TABLE IF NOT EXISTS Car(
+    plate_number varchar(10)  PRIMARY KEY,
     model        varchar(255) NOT NULL,
+    brand        varchar(255) NOT NULL,
     year         int          NOT NULL,
-    free       boolean      NOT NULL,
+    available       boolean      NOT NULL,
     office_id    int          NOT NULL,
+    num_passengers int         NOT NULL,
+
     FOREIGN KEY (office_id) REFERENCES Office (office_id)
 );
-CREATE TABLE IF NOT EXISTS Reservation
-(
+CREATE TABLE IF NOT EXISTS Reservation(
     reservation_id   int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     reservation_date timestamp NOT NULL,
     pick_up_date     timestamp NOT NULL,
     return_date      timestamp NOT NULL,
-    car_id           int       NOT NULL,
+    plate_number     varchar(10)       NOT NULL,
     customer_id      int       NOT NULL,
-    FOREIGN KEY (car_id) REFERENCES Car (car_id),
+    FOREIGN KEY (plate_number) REFERENCES Car (plate_number),
     FOREIGN KEY (customer_id) REFERENCES Customer (customer_id)
 );
-CREATE TABLE IF NOT EXISTS Payment
-(
+CREATE TABLE IF NOT EXISTS Payment(
     payment_id     int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     payment_type  varchar(255) NOT NULL,
     payment_date  timestamp NOT NULL,
