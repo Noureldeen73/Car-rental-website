@@ -65,7 +65,7 @@ function ReservePage() {
             </div>
             <div className="detail-item">
               <span className="detail-label">City:</span>
-              <span className="detail-value">{car.office_city}</span>
+              <span className="detail-value">{car.city}</span>
             </div>
             <div className="detail-item">
               <span className="detail-label">Plate Number:</span>

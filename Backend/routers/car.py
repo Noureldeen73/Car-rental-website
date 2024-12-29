@@ -40,7 +40,7 @@ async def get_all_reservations(model: str, year:int, city:str, db=fastapi.Depend
 @router.get('/get_car_by_plate_num/')
 async def get_reservations_by_car(plate_number: str, db=fastapi.Depends(get_db)):
     try:
-        car = await db.fetchrow("""SELECT * FROM Car WHERE plate_number = $1""", plate_number)
+        car = await db.fetchrow("""SELECT * FROM Car c JOIN office o ON c.office_id = o.office_id WHERE plate_number = $1""", plate_number)
         if not car:
             raise fastapi.HTTPException(status_code=404, detail="No car is found")
         return dict(car)  # Convert asyncpg record to dictionary
