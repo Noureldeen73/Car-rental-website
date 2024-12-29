@@ -1,9 +1,10 @@
 .login-container,
 .register-container {
   flex: 1;
-  max-width: 500px;
-  margin-left: 350px;
-  margin-right: 350px;
+  width: 25%;
+  max-width: 1000px;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 .login-form,

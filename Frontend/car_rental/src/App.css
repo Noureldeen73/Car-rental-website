@@ -2,6 +2,8 @@
   text-align: center;
   background-image: url('./car.png');
   background-size: cover;
+  height: 100%;
+  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
 }

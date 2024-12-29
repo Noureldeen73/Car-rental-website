@@ -22,9 +22,9 @@ function CustomerPage() {
   const fetchCars = async () => {
     try {
       const queryString = new URLSearchParams({
-        model: filters.model,
-        year: filters.year,
-        city: filters.city
+        model: filters.model || '',
+        year: filters.year || '0',
+        city: filters.city || ''
       }).toString();
 
       const response = await fetch(`http://127.0.0.1:8000/Car/get_car_by_filter/?${queryString}`);
@@ -37,8 +37,8 @@ function CustomerPage() {
     }
   };
 
-  const handleReserve = (carId) => {
-    navigate(`/reserve/${carId}`);
+  const handleReserve = (plateNum) => {
+    navigate(`/reserve/${plateNum}`);
   };
 
   useEffect(() => {
@@ -73,7 +73,7 @@ function CustomerPage() {
 
       <div className="cars-grid">
         {cars.map((car) => (
-          <div key={car.car_id} className="car-card">
+          <div key={car.plate_number} className="car-card">
             <img src={carImage} alt={car.model} className="car-image" />
             <div className="car-info">
               <h3>{car.model}</h3>
@@ -81,7 +81,7 @@ function CustomerPage() {
               <p>City: {car.office_city}</p>
               <button 
                 className="reserve-button"
-                onClick={() => handleReserve(car.car_id)}
+                onClick={() => handleReserve(car.plate_number)}
               >
                 Reserve
               </button>
