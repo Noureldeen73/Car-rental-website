@@ -146,11 +146,12 @@ async def add_car(plate_number: str,
         if not office_exists:
             raise HTTPException(status_code=400, detail="Office ID does not exist")
 
+        img_path = "img/car.png"
         # Insert the new car
         await db.execute("""
-            INSERT INTO Car (plate_number, model, brand, year, available, office_id, price, num_passengers)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-        """, plate_number,model, brand, year, True, office_id, price, num_passengers)
+            INSERT INTO Car (plate_number, model, brand, year, available, office_id, price, num_passengers, img_path)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        """, plate_number,model, brand, year, True, office_id, price, num_passengers, img_path)
 
         return {"message": "Car added successfully"}
 
