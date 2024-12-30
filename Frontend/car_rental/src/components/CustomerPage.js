@@ -1,16 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/CustomerPage.css';
 import carImage from '../car.png';
 
 function CustomerPage() {
   const [cars, setCars] = useState([]);
+  const [customerId, setCustomerId] = useState(null);
   const [filters, setFilters] = useState({
     model: '',
     year: '',
     city: ''
   });
   const navigate = useNavigate();
+  const location = useLocation();
+  const userId = location.state?.userId;
+
+  useEffect(() => {
+    const fetchCustomerId = async () => {
+      if (!userId) {
+        navigate('/'); // Redirect to login if no userId
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/user/customer_id_by_user_id/?user_id=${parseInt(userId)}`);
+        if (response.ok) {
+          const data = await response.json();
+          setCustomerId(data.customer_id);
+        } else {
+          console.error('Failed to fetch customer ID');
+        }
+      } catch (error) {
+        console.error('Error fetching customer ID:', error);
+      }
+    };
+
+    fetchCustomerId();
+  }, [userId, navigate]);
 
   const handleFilterChange = (e) => {
     setFilters({
@@ -40,7 +66,16 @@ function CustomerPage() {
   };
 
   const handleReserve = (plateNum) => {
-    navigate(`/reserve/${plateNum}`);
+    if (!customerId) {
+      alert('Please wait while we load your customer information');
+      return;
+    }
+    navigate(`/reserve/${plateNum}`, { 
+      state: { 
+        customerId,
+        userId
+      } 
+    });
   };
 
   useEffect(() => {
