@@ -1,7 +1,8 @@
 venv
 .idea/*
 /node_modules/
-__pycache__/
-database.py
-__pycache__/
-./Backend/database.py
+/__pycache__/
+Backend/__pycache__/
+Backend/routers/__pycache__/
+Backend/Database/__pycache__/
+/Backend/database.py
