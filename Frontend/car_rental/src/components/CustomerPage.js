@@ -57,6 +57,7 @@ function CustomerPage() {
       if (response.ok) {
         const data = await response.json();
         setCars(data);
+        console.log(cars);
       }
       else
         setCars([]);
@@ -111,7 +112,7 @@ function CustomerPage() {
       <div className="cars-grid">
         {cars.map((car) => (
           <div key={car.plate_number} className="car-card">
-            <img src={carImage} alt={car.model} className="car-image" />
+          <img src={`/${car.img_path}`} alt={car.model} className="car-image" />
             <div className="car-info">
               <h3>{car.model}</h3>
               <p>Year: {car.year}</p>

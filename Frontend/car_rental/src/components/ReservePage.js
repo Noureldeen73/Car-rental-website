@@ -125,7 +125,7 @@ function ReservePage() {
         <div className="reserve-page">
             <div className="car-details-card">
                 <div className="car-image-container">
-                    <img src={carImage} alt={car.model} className="car-detail-image"/>
+                    <img src={`/${car.img_path}`} alt={car.model} className="car-detail-image"/>
                 </div>
                 <div className="car-details-info">
                     <h2>{car.model}</h2>
