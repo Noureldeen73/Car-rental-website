@@ -33,17 +33,17 @@ INSERT INTO Admin (first_name, last_name, user_id, office_id) VALUES
 ('Admin', 'Two', 4, 2);
 
 -- Insert into Car table
-INSERT INTO Car (plate_number, model, brand, year, available, office_id, price, num_passengers) VALUES
-('XYZ123', 'Civic', 'Honda', 2020, TRUE, 1, 50.00, 5),
-('ABC456', 'Accord', 'Honda', 2019, TRUE, 1, 60.00, 5),
-('DEF789', 'Camry', 'Toyota', 2021, TRUE, 2, 55.00, 5),
-('GHI012', 'Corolla', 'Toyota', 2018, TRUE, 2, 45.00, 5),
-('JKL345', 'Escape', 'Ford', 2020, TRUE, 1, 65.00, 7),
-('MNO678', 'Focus', 'Ford', 2019, TRUE, 1, 50.00, 5),
-('PQR901', 'Model 3', 'Tesla', 2022, TRUE, 2, 100.00, 5),
-('STU234', 'Model Y', 'Tesla', 2021, TRUE, 2, 120.00, 7),
-('VWX567', 'Tahoe', 'Chevrolet', 2020, TRUE, 1, 90.00, 8),
-('YZA890', 'Impala', 'Chevrolet', 2018, TRUE, 1, 60.00, 5);
+INSERT INTO Car (plate_number, model, brand, year, available, office_id, price, num_passengers, img_path) VALUES
+('XYZ123', 'Civic', 'Honda', 2020, TRUE, 1, 50.00, 5, 'img/honda-civic.jpg'),
+('ABC456', 'Accord', 'Honda', 2019, TRUE, 1, 60.00, 5, 'img/honda-accord.jpg'),
+('DEF789', 'Camry', 'Toyota', 2021, TRUE, 2, 55.00, 5, 'img/toyota-camry.jpg'),
+('GHI012', 'Corolla', 'Toyota', 2018, TRUE, 2, 45.00, 5, 'img/toyota-corolla.jpg'),
+('JKL345', 'Escape', 'Ford', 2020, TRUE, 1, 65.00, 7, 'img/ford-escape.jpg'),
+('MNO678', 'Focus', 'Ford', 2019, TRUE, 1, 50.00, 5, 'img/ford-focus.jpg'),
+('PQR901', 'Model 3', 'Tesla', 2022, TRUE, 2, 100.00, 5, 'img/tesla-model-3.jpg'),
+('STU234', 'Model Y', 'Tesla', 2021, TRUE, 2, 120.00, 7, 'img/tesla-model-y.jpg'),
+('VWX567', 'Tahoe', 'Chevrolet', 2020, TRUE, 1, 90.00, 8, 'img/chevrolet-tahoe.jpg'),
+('YZA890', 'Impala', 'Chevrolet', 2018, TRUE, 1, 60.00, 5, 'img/chevrolet-impala.jpg');
 
 -- Insert into Reservation table
 INSERT INTO Reservation (reservation_date, pick_up_date, return_date, plate_number, customer_id) VALUES

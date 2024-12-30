@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS Car(
     office_id    int          NOT NULL,
     price       float        NOT NULL,
     num_passengers int        NOT NULL,
+    img_path          varchar(255) NOT NULL,
 
     FOREIGN KEY (office_id) REFERENCES Office (office_id)
 );
