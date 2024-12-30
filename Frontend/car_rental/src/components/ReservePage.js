@@ -62,13 +62,14 @@ function ReservePage() {
   const handleSubmit = async () => {
     try {
       const reservationData = {
-        plate_number: car.plate_number,
+        reservation_date: new Date().toISOString().split('T')[0],
         pickup_date: dates.pickupDate,
         return_date: dates.returnDate,
+        plate_number: car.plate_number,
         total_price: totalPrice
       };
-
-      const response = await fetch('http://127.0.0.1:8000/reservation/make_reservation/', {
+      console.log(reservationData);
+      const response = await fetch('http://127.0.0.1:8000/Car/make_reservation/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

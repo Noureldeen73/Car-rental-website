@@ -32,6 +32,8 @@ function CustomerPage() {
         const data = await response.json();
         setCars(data);
       }
+      else
+        setCars([]);
     } catch (error) {
       console.error('Error fetching cars:', error);
     }
@@ -78,7 +80,7 @@ function CustomerPage() {
             <div className="car-info">
               <h3>{car.model}</h3>
               <p>Year: {car.year}</p>
-              <p>City: {car.office_city}</p>
+              <p>City: {car.city}</p>
               <button 
                 className="reserve-button"
                 onClick={() => handleReserve(car.plate_number)}
