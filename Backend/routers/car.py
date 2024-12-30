@@ -49,13 +49,13 @@ async def get_reservation_dates_by_plate_number(plate_number:str, db=fastapi.Dep
 
 
 @router.post('/make_reservation')
-async def create_reservation(hoss: str,
+async def create_reservation(reservation_date: str,
                              pickup_date: str,
                              return_date: str,
                              plate_number: str, customer_id:int,
                              payment_type:str, db=fastapi.Depends(get_db)):
     try:
-        hoss = datetime.fromisoformat(hoss)
+        hoss = datetime.fromisoformat(reservation_date)
         pickup_date = datetime.fromisoformat(pickup_date)
         return_date = datetime.fromisoformat(return_date)
 
