@@ -1,16 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/CustomerPage.css';
 import carImage from '../car.png';
 
 function CustomerPage() {
   const [cars, setCars] = useState([]);
+  const [customerId, setCustomerId] = useState(null);
   const [filters, setFilters] = useState({
     model: '',
     year: '',
     city: ''
   });
   const navigate = useNavigate();
+  const location = useLocation();
+  const userId = location.state?.userId;
+
+  useEffect(() => {
+    const fetchCustomerId = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/customer_id_by_user_id/?user_id=${userId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setCustomerId(data.customer_id);
+        }
+      } catch (error) {
+        console.error('Error fetching customer ID:', error);
+      }
+    };
+
+    if (userId) {
+      fetchCustomerId();
+    }
+  }, [userId]);
 
   const handleFilterChange = (e) => {
     setFilters({
@@ -40,7 +61,7 @@ function CustomerPage() {
   };
 
   const handleReserve = (plateNum) => {
-    navigate(`/reserve/${plateNum}`);
+    navigate(`/reserve/${plateNum}`, { state: { customerId } });
   };
 
   useEffect(() => {

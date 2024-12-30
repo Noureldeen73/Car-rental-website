@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/ReservePage.css';
 import carImage from '../car.png';
 
 function ReservePage() {
   const [car, setCar] = useState(null);
   const [error, setError] = useState(null);
+  const [existingReservations, setExistingReservations] = useState([]);
   const [dates, setDates] = useState({
     pickupDate: '',
     returnDate: ''
   });
+  const [paymentMethod, setPaymentMethod] = useState('cash');
   const [totalPrice, setTotalPrice] = useState(0);
   const { carId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const customerId = location.state?.customerId;
 
   useEffect(() => {
     const fetchCarDetails = async () => {
@@ -25,6 +29,13 @@ function ReservePage() {
         if (response.ok) {
           const data = await response.json();
           setCar(data);
+          
+          // Fetch existing reservations
+          const reservationsResponse = await fetch(`http://127.0.0.1:8000/Car/get_reservation_dates_by_car/?plate_number=${carId}`);
+          if (reservationsResponse.ok) {
+            const reservationsData = await reservationsResponse.json();
+            setExistingReservations(reservationsData);
+          }
         } else {
           const errorData = await response.json();
           setError(errorData.detail || 'Failed to fetch car details');
@@ -66,9 +77,11 @@ function ReservePage() {
         pickup_date: dates.pickupDate,
         return_date: dates.returnDate,
         plate_number: car.plate_number,
+        customer_id: customerId,
+        payment_method: paymentMethod,
         total_price: totalPrice
       };
-      console.log(reservationData);
+
       const response = await fetch('http://127.0.0.1:8000/Car/make_reservation/', {
         method: 'POST',
         headers: {
@@ -79,7 +92,7 @@ function ReservePage() {
 
       if (response.ok) {
         alert('Reservation successful!');
-        navigate('/customer');
+        navigate('/customer', { state: { userId: location.state?.userId } });
       } else {
         const errorData = await response.json();
         alert(`Reservation failed: ${errorData.detail}`);
@@ -134,6 +147,20 @@ function ReservePage() {
           </div>
 
           <div className="reservation-section">
+            {existingReservations.length > 0 && (
+              <div className="existing-reservations">
+                <h3>Existing Reservations:</h3>
+                <ul>
+                  {existingReservations.map((reservation, index) => (
+                    <li key={index}>
+                      {new Date(reservation.pickup_date).toLocaleDateString()} - 
+                      {new Date(reservation.return_date).toLocaleDateString()}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className="date-inputs">
               <div className="date-input-group">
                 <label htmlFor="pickupDate">Pickup Date:</label>
@@ -159,6 +186,19 @@ function ReservePage() {
                   required
                 />
               </div>
+            </div>
+
+            <div className="payment-method">
+              <label htmlFor="paymentMethod">Payment Method:</label>
+              <select
+                id="paymentMethod"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                required
+              >
+                <option value="cash">Cash</option>
+                <option value="credit">Credit</option>
+              </select>
             </div>
 
             {totalPrice > 0 && (

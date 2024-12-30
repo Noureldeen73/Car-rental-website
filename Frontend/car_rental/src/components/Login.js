@@ -24,14 +24,13 @@ function Login() {
             if (data.is_admin) {
               navigate('/admin');
             } else {
-              navigate('/customer');
+              navigate('/customer', { state: { userId: data.user_id } });
             }
           } else {
-            const error = await response.json();
-            alert(`Login failed: ${error.detail}`);
+            alert('Login failed');
           }
         } catch (error) {
-          alert('Login failed: ' + error.message);
+          alert('Error during login: ' + error.message);
         }
       };
 
