@@ -36,16 +36,6 @@ function ReservePage() {
                     const data = await response.json();
                     setCar(data);
 
-                    // Fetch existing reservations
-                    console.log(carId);
-                    const reservationsResponse = await fetch(`http://127.0.0.1:8000/Car/get_reservation_dates_by_car/?plate_number=${carId}`);
-                    if (reservationsResponse.ok) {
-                        const reservationsData = await reservationsResponse.json();
-                        console.log(reservationsData);
-                        setExistingReservations(reservationsData);
-                    }
-                    console.log(existingReservations);
-
                 } else {
                     const errorData = await response.json();
                     setError(errorData.detail || 'Failed to fetch car details');
@@ -159,19 +149,6 @@ function ReservePage() {
                     </div>
 
                     <div className="reservation-section">
-                        {existingReservations.length > 0 && (
-                            <div className="existing-reservations">
-                                <h3>Existing Reservations:</h3>
-                                <ul>
-                                    {existingReservations.map((reservation, index) => (
-                                        <li key={index}>
-                                            {new Date(reservation.pickup_date).toLocaleDateString()} -
-                                            {new Date(reservation.return_date).toLocaleDateString()}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
 
                         <div className="date-inputs">
                             <div className="date-input-group">
@@ -235,6 +212,121 @@ function ReservePage() {
             </div>
         </div>
     );
+<<<<<<< Updated upstream
+=======
+  }
+
+  if (!car) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  return (
+    <div className="reserve-page">
+      <div className="car-details-card">
+        <div className="car-image-container">
+          <img src={carImage} alt={car.model} className="car-detail-image" />
+        </div>
+        <div className="car-details-info">
+          <h2>{car.model}</h2>
+          <div className="details-grid">
+            <div className="detail-item">
+              <span className="detail-label">Year:</span>
+              <span className="detail-value">{car.year}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">City:</span>
+              <span className="detail-value">{car.city}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Plate Number:</span>
+              <span className="detail-value">{car.plate_number}</span>
+            </div>
+            <div className="detail-item">
+              <span className="detail-label">Price per Day:</span>
+              <span className="detail-value">${car.price}</span>
+            </div>
+          </div>
+
+          <div className="reservation-section">
+            {existingReservations && existingReservations.length > 0 ? (
+              <div className="existing-reservations">
+                <h3>Existing Reservations:</h3>
+                <ul>
+                  {existingReservations.map((reservation, index) => (
+                    <li key={index}>
+                      From: {new Date(reservation.pickup_date).toLocaleDateString()} 
+                      To: {new Date(reservation.return_date).toLocaleDateString()}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="no-reservations">No existing reservations for this car</p>
+            )}
+
+            <div className="date-inputs">
+              <div className="date-input-group">
+                <label htmlFor="pickupDate">Pickup Date:</label>
+                <input
+                  type="date"
+                  id="pickupDate"
+                  name="pickupDate"
+                  value={dates.pickupDate}
+                  onChange={handleDateChange}
+                  min={new Date().toISOString().split('T')[0]}
+                  required
+                />
+              </div>
+              <div className="date-input-group">
+                <label htmlFor="returnDate">Return Date:</label>
+                <input
+                  type="date"
+                  id="returnDate"
+                  name="returnDate"
+                  value={dates.returnDate}
+                  onChange={handleDateChange}
+                  min={dates.pickupDate || new Date().toISOString().split('T')[0]}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="payment-method">
+              <label htmlFor="paymentMethod">Payment Method:</label>
+              <select
+                id="paymentMethod"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                required
+              >
+                <option value="cash">Cash</option>
+                <option value="credit">Credit</option>
+              </select>
+            </div>
+
+            {totalPrice > 0 && (
+              <div className="total-price">
+                <span className="price-label">Total Price:</span>
+                <span className="price-value">${totalPrice}</span>
+              </div>
+            )}
+
+            <div className="button-group">
+              <button className="back-button" onClick={handleBack}>Back</button>
+              <button 
+                className="reserve-button" 
+                onClick={handleSubmit}
+                disabled={!dates.pickupDate || !dates.returnDate || totalPrice <= 0}
+              >
+                Confirm Reservation
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+>>>>>>> Stashed changes
 }
 
 export default ReservePage; 
