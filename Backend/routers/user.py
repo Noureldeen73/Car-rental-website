@@ -19,3 +19,23 @@ async def get_user(id: int, db=Depends(get_db)):
         return dict(user)  # Convert asyncpg record to dictionary
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/admin_id_by_user_id")
+async def get_admin(user_id: int, db=Depends(get_db)):
+    try:
+        admin = await db.fetchrow("""SELECT admin_id FROM Admin WHERE user_id = $1""", user_id)
+        if not admin:
+            raise HTTPException(status_code=404, detail="User not found")
+        return dict(admin)  # Convert asyncpg record to dictionary
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/customer_id_by_user_id")
+async def get_admin(user_id: int, db=Depends(get_db)):
+    try:
+        customer = await db.fetchrow("""SELECT customer_id FROM Customer WHERE user_id = $1""", user_id)
+        if not customer:
+            raise HTTPException(status_code=404, detail="User not found")
+        return dict(customer)  # Convert asyncpg record to dictionary
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
