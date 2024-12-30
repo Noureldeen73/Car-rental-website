@@ -17,8 +17,14 @@ function ReservePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const customerId = location.state?.customerId;
+  const userId = location.state?.userId;
 
   useEffect(() => {
+    if (!customerId) {
+      navigate('/');
+      return;
+    }
+
     const fetchCarDetails = async () => {
       try {
         const queryString = new URLSearchParams({
@@ -47,7 +53,7 @@ function ReservePage() {
     };
 
     fetchCarDetails();
-  }, [carId]);
+  }, [carId, customerId, navigate]);
 
   const handleDateChange = (e) => {
     const { name, value } = e.target;
@@ -71,16 +77,23 @@ function ReservePage() {
   }, [dates, car]);
 
   const handleSubmit = async () => {
+    if (!customerId) {
+      alert('Customer information is missing');
+      return;
+    }
+
     try {
       const reservationData = {
         reservation_date: new Date().toISOString().split('T')[0],
         pickup_date: dates.pickupDate,
         return_date: dates.returnDate,
         plate_number: car.plate_number,
-        customer_id: customerId,
+        customer_id: parseInt(customerId),
         payment_method: paymentMethod,
         total_price: totalPrice
       };
+
+      console.log('Sending reservation data:', reservationData);
 
       const response = await fetch('http://127.0.0.1:8000/Car/make_reservation/', {
         method: 'POST',
@@ -92,7 +105,7 @@ function ReservePage() {
 
       if (response.ok) {
         alert('Reservation successful!');
-        navigate('/customer', { state: { userId: location.state?.userId } });
+        navigate('/customer', { state: { userId } });
       } else {
         const errorData = await response.json();
         alert(`Reservation failed: ${errorData.detail}`);

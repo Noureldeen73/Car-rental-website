@@ -24,7 +24,11 @@ function Login() {
             if (data.is_admin) {
               navigate('/admin');
             } else {
-              navigate('/customer', { state: { userId: data.user_id } });
+              navigate('/customer', { 
+                state: { 
+                  userId: parseInt(data.user_id)
+                } 
+              });
             }
           } else {
             alert('Login failed');
