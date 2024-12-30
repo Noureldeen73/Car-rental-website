@@ -84,12 +84,13 @@ async def get_reservation_dates_by_plate_number(plate_number:str, db=fastapi.Dep
 
 
 @router.post('/make_reservation')
-async def create_reservation(reservation_date: str,
+async def create_reservation(
                              pickup_date: str,
                              return_date: str,
                              plate_number: str,
-                             customer_id:int,
+                             user_id:int,
                              payment_type:str = "Cash", db=fastapi.Depends(get_db)):
+    reservation_date = datetime.now().isoformat()
     try:
         reservation_date = datetime.fromisoformat(reservation_date)
         pickup_date = datetime.fromisoformat(pickup_date)
@@ -108,7 +109,9 @@ async def create_reservation(reservation_date: str,
 
         if not_available:
             raise ValueError("Car is not available for the selected dates.")
-
+        customer = await db.fetchrow("""SELECT customer_id FROM Customer WHERE user_id = $1""", user_id)
+        customer_id = customer['customer_id']
+        print(customer_id, user_id, plate_number, reservation_date, pickup_date, return_date, payment_type)
         await db.execute(
             """INSERT INTO Reservation (reservation_date, pick_up_date, return_date, plate_number, customer_id) VALUES ($1, $2, $3, $4, $5)""",
             reservation_date, pickup_date, return_date, plate_number, customer_id )

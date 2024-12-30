@@ -19,6 +19,8 @@ function ReservePage() {
     const customerId = location.state?.customerId;
     const userId = location.state?.userId;
 
+    console.log('userID in reservation page: ', userId);
+
     useEffect(() => {
         if (!customerId) {
             navigate('/');
@@ -82,7 +84,7 @@ function ReservePage() {
                 pickup_date: dates.pickupDate,
                 return_date: dates.returnDate,
                 plate_number: car.plate_number,
-                customer_id: parseInt(customerId),
+                user_id: parseInt(userId),
                 payment_method: paymentMethod,
                 total_price: totalPrice
             };

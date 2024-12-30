@@ -27,6 +27,9 @@ function CustomerPage() {
         if (response.ok) {
           const data = await response.json();
           setCustomerId(data.customer_id);
+          console.log(userId);
+          console.log(data);
+          console.log('Customer ID:', customerId);
         } else {
           console.error('Failed to fetch customer ID');
         }
