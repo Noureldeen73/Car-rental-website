@@ -87,7 +87,8 @@ async def get_reservation_dates_by_plate_number(plate_number:str, db=fastapi.Dep
 async def create_reservation(reservation_date: str,
                              pickup_date: str,
                              return_date: str,
-                             plate_number: str, customer_id:int,
+                             plate_number: str,
+                             customer_id:int,
                              payment_type:str = "Cash", db=fastapi.Depends(get_db)):
     try:
         reservation_date = datetime.fromisoformat(reservation_date)
@@ -135,3 +136,28 @@ async def create_reservation(reservation_date: str,
 
     except Exception as e:
         raise fastapi.HTTPException(status_code=400, detail=str(e))
+
+
+@router.put('/update_cars')
+async def update_av(current_date: str, db=fastapi.Depends(get_db)):
+    try:
+
+        parsed_date = datetime.strptime(current_date, "%Y-%m-%d").date()  # Parse the date from string
+
+        await db.execute("""UPDATE Car
+                SET available = CASE
+                    WHEN EXISTS (
+                        SELECT 1
+                        FROM Reservation
+                        WHERE Car.plate_number = Reservation.plate_number
+                        AND (
+                            $1 BETWEEN Reservation.pick_up_date::date AND Reservation.return_date::date
+                        )
+                    ) THEN FALSE
+                    ELSE TRUE
+                END
+                """, parsed_date)
+
+        return {"message": "Car availability updated successfully"}
+    except Exception as e:
+        raise fastapi.HTTPException(status_code=500, detail=str(e))
