@@ -59,6 +59,11 @@ function ReservePage() {
         }));
     };
 
+    const handleLogout = () => {
+        navigate(`/`);
+    };
+
+
     useEffect(() => {
         if (car && dates.pickupDate && dates.returnDate) {
             const start = new Date(dates.pickupDate);
@@ -126,6 +131,12 @@ function ReservePage() {
     return (
         <div className="reserve-page">
             <div className="car-details-card">
+                <button
+                    className="logout-button"
+                    onClick={() => handleLogout()}
+                >
+                    Logout
+                </button>
                 <div className="car-image-container">
                     <img src={`/${car.img_path}`} alt={car.model} className="car-detail-image"/>
                 </div>
@@ -214,6 +225,6 @@ function ReservePage() {
             </div>
         </div>
     );
-  }
+}
 
 export default ReservePage; 

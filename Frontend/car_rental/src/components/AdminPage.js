@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/AdminPage.css';
+import {useParams, useNavigate, useLocation} from 'react-router-dom';
 
 function AdminPage() {
   const [activeSection, setActiveSection] = useState(null);
@@ -7,6 +8,7 @@ function AdminPage() {
   const [carData, setCarData] = useState({ plateNumber: '' });
   const [customerData, setCustomerData] = useState({ customerId: '' });
   const [results, setResults] = useState(null);
+  const navigate = useNavigate();
   const [addCarForm, setAddCarForm] = useState({
     plateNumber: '',
     model: '',
@@ -102,6 +104,10 @@ function AdminPage() {
     } catch (error) {
       console.error('Error:', error);
     }
+  };
+
+  const handleLogout = () => {
+    navigate(`/`);
   };
 
   const renderResults = () => {
@@ -239,12 +245,18 @@ function AdminPage() {
         <button onClick={() => setActiveSection('car')}>Car Reservations</button>
         <button onClick={() => setActiveSection('customer')}>Customer Reservations</button>
         <button onClick={() => setActiveSection('addCar')}>Add New Car</button>
+        <button
+            className="logout-button"
+            onClick={() => handleLogout()}
+        >
+          Logout
+        </button>
       </div>
 
       <div className="admin-content">
         {activeSection === 'period' && (
-          <div className="section">
-            <h2>Period Reservations</h2>
+            <div className="section">
+              <h2>Period Reservations</h2>
             <input
               type="date"
               value={periodData.startDate}
