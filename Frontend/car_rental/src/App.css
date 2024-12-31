@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-image: url('./car.png');
+  background-image: url('./car.jpg');
   background-size: cover;
   height: 100%;
   width: 100%;
@@ -9,7 +9,32 @@
 }
 
 .app-title {
+  margin: 0;
+  margin-bottom: 30px;
   color: white;
+  background-color: #282c34;
+  height: 50px;
+  text-align: center;
+}
+
+.register-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+label{
+  text-align: left;
 }
 
 .auth-container {
